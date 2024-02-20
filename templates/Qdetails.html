@@ -1,0 +1,22 @@
+ {% extends "base.html" %}
+
+
+ {% block title %}
+
+ Question Details
+
+ {% endblock %}
+
+
+ {% block body %}
+
+ <div class = "container mt-3">
+    <h1>{{question.title}}</h1>
+    <p>{{question.body}}</p>
+
+    <h6>Posted By: <i> {{question.author}}</i></h6>
+    <p>Published {{question.created_at}}</p>
+
+ </div>
+
+ {% endblock %}

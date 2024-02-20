@@ -24,7 +24,7 @@ Question list
 
      <div class = "card mt-3 shadow">
         <div class = "card-body">
-            <h5 class = "card-title "><a class  = "link-style"href="">{{question.title}}</a></h5>
+            <h5 class = "card-title "><a class  = "link-style"href="{% url 'question-details' question.slug%}">{{question.title}}</a></h5>
             <p class = "card-text">{{question.body}}</p>
             <div class = "card-footer">
                 <div class = "row">
