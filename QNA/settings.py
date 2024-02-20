@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'questions',
+    'crispy_forms',
+    'crispy_bootstrap5',
+     
 ]
 
 MIDDLEWARE = [
@@ -116,6 +119,20 @@ USE_TZ = True
 
 
 AUTH_USER_MODEL = 'users.CustomUser'
+
+CRISPY_ALLOWED_TEMPLATE_PACKS ="bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
+LOGIN_REDIRECT_URL = 'question-list'
+
+LOGIN_URL = 'login'
+
+LOGOUT_URL = 'logout'
+
+
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
