@@ -10,13 +10,13 @@ class Question(models.Model):
     slug = models.SlugField(max_length=250, unique=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
                                on_delete=models.CASCADE,
-                               related_name='quesitons')
+                               related_name='questions')
 
     def __str__(self):
         return self.title
 class Answer(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
-    description = models.TextField()
+    description  = models.TextField()
     question = models.ForeignKey(Question, on_delete=models.CASCADE,
                                      related_name='answers')
     author = models.ForeignKey(settings.AUTH_USER_MODEL,
