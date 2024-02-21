@@ -1,6 +1,6 @@
-from django.shortcuts import render,get_object_or_404
-from . models import Question
-from . forms import UserRegistrationForm
+from django.shortcuts import render,get_object_or_404,redirect
+from . models import Question,Answer
+from . forms import UserRegistrationForm,QuestionRegistrationForm,AnswerForm
 # Create your views here.
 def question_list(request):
     question_list = Question.objects.all().order_by('-created_at')
@@ -8,7 +8,23 @@ def question_list(request):
 
 def question_details(request,slug):
     question = Question.objects.get(slug = slug)
-    return render(request,"Qdetails.html",{"question":question})
+    answer_list = Answer.objects.filter(question = question)
+
+    #ading answer
+    if request.method == "POST":
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.author = request.user
+            answer.question = question
+            answer = form.save()
+            return redirect('question-details',slug = slug)
+    else:
+        form = AnswerForm()
+    
+
+    
+    return render(request,"Qdetails.html",{"question":question,'answer_list':answer_list,"form":form})
 
 def register(request):
 
@@ -28,3 +44,19 @@ def register(request):
 
         
     return render(request,'register.html',{'user_form':user_form})
+
+def create_question(request):
+    if request.method == "POST":
+        question_form = QuestionRegistrationForm(request.POST)
+        if question_form.is_valid():
+            question = question_form.save(commit = False)
+            question.author = request.user
+            question = question_form.save()
+            return redirect('question-list')
+
+    else:
+        question_form = QuestionRegistrationForm()
+
+    return render(request, "add_question.html",{"question_form":question_form})
+
+ 

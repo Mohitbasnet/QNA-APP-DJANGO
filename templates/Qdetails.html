@@ -1,5 +1,5 @@
  {% extends "base.html" %}
-
+ {% load crispy_forms_tags%}
 
  {% block title %}
 
@@ -16,6 +16,52 @@
 
     <h6>Posted By: <i> {{question.author}}</i></h6>
     <p>Published {{question.created_at}}</p>
+     <hr>
+     <h5>Answer list</h5>
+ </div>
+
+ <div class ="container">
+   {% for answers in  answer_list%}
+   <div class = "card mt-4 py-3 shadow">
+      <div class = "card-body">
+         <p class= "card-text">{{answers.description}}</p>
+         <div class = "row">
+            <div class = "col col-md-auto">
+               Answered By : {{ answers.author.username}}
+
+
+            </div>
+            <div class = "col col-md-auto">
+               Answerd Time : {{answers.created_at}}
+
+
+            </div>
+             
+         </div>
+
+         
+
+      </div>
+
+   </div>
+   {% endfor %}
+   <!-- Adding answer -->
+   <div class = "container">
+      <div class = "card mt-4">
+         <form action="" method = "post" novalidate>
+            <h5 class "card header">Add Answer</h5>
+            <div class = "card-body">
+               {% csrf_token%}
+               {{form|crispy}}
+            <input type="submit" value = "Add Answer" class = "btn btn-success">
+
+            </div>
+            
+         </form>
+
+      </div>
+
+   </div>
 
  </div>
 
