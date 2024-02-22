@@ -1,6 +1,7 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from . models import Question,Answer
-from . forms import UserRegistrationForm,QuestionRegistrationForm,AnswerForm,AnswerUpdateForm,QuestionUpdateForm
+from . forms import UserRegistrationForm,QuestionRegistrationForm,AnswerForm,AnswerUpdateForm,QuestionUpdateForm,ProfileForm
+from django.contrib import messages
 # Create your views here.
 def question_list(request):
     question_list = Question.objects.all().order_by('-created_at')
@@ -90,3 +91,15 @@ def delete_answer(request,id):
     answer.delete()
     return redirect('question-details',slug = answer.question.slug)
     
+def change_profile(request):
+    if request.method == "POST":
+        form = ProfileForm(request.POST, instance = request.user)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request,'Your profile has been updated successfully')
+
+    
+    form = ProfileForm(instance = request.user)
+
+    return render(request,"registration/profile.html",{'form':form})
