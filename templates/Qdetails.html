@@ -17,7 +17,10 @@
     <h6>Posted By: <i> {{question.author}}</i></h6>
     <p>Published {{question.created_at}}</p>
      <hr>
-     <h5>Answer list</h5>
+     {% if request.user == question.author%}
+     <a  class = "btn btn-danger"href="{% url 'delete-question' question.slug%}">Delete</a>
+     <a  class = "btn btn-success"href="{% url 'update-question' question.slug%}">Update</a>
+     {% endif %}
  </div>
 
  <div class ="container">
@@ -39,7 +42,10 @@
              
          </div>
 
-         
+         {% if request.user == answers.author%}
+         <a  class = "btn btn-outline-danger btn-sm mt-3"href="{% url 'delete-answer' answers.id%}">Delete</a>
+         <a  class = "btn btn-outline-success btn-sm mt-3"href="{% url 'update-answer' answers.id%}">Update</a>
+         {% endif %}
 
       </div>
 
@@ -49,7 +55,7 @@
    <div class = "container">
       <div class = "card mt-4">
          <form action="" method = "post" novalidate>
-            <h5 class "card header">Add Answer</h5>
+            <h5 class ="card header">Add Answer</h5>
             <div class = "card-body">
                {% csrf_token%}
                {{form|crispy}}

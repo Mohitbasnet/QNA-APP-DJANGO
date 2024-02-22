@@ -1,6 +1,6 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from . models import Question,Answer
-from . forms import UserRegistrationForm,QuestionRegistrationForm,AnswerForm
+from . forms import UserRegistrationForm,QuestionRegistrationForm,AnswerForm,AnswerUpdateForm,QuestionUpdateForm
 # Create your views here.
 def question_list(request):
     question_list = Question.objects.all().order_by('-created_at')
@@ -60,3 +60,33 @@ def create_question(request):
     return render(request, "add_question.html",{"question_form":question_form})
 
  
+def update_question(request,slug):
+    question = Question.objects.get(slug = slug)
+
+    form = QuestionUpdateForm(request.POST or None, instance = question)
+
+    if form.is_valid():
+        form.save()
+        return redirect('question-list')
+
+    return render(request, 'update.html',{'form': form})
+
+def delete_question(request,slug):
+    question= Question.objects.get(slug = slug)
+    question.delete()
+    return redirect('question-list')
+def update_answer(request,id):
+    answer = Answer.objects.get(id = id)
+
+    form = AnswerUpdateForm(request.POST or None, instance = answer)
+    if form.is_valid():
+        form.save()
+        return redirect('question-details',slug = answer.question.slug)
+    return render(request, 'update_answer.html',{'form':form})
+
+
+def delete_answer(request,id):
+    answer = Answer.objects.get(id = id)
+    answer.delete()
+    return redirect('question-details',slug = answer.question.slug)
+    
