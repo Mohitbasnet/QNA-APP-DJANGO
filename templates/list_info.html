@@ -1,0 +1,70 @@
+{% extends "base.html"%}
+{% load crispy_forms_tags %}
+
+
+{% block title %} Listing Questions{% endblock %}
+{% block style%}
+<style>
+    .link-style {
+        text-decoration:none;
+        color: rgb(28,90,4);
+    }
+    .link-styke:hover {
+        text-decoration: none;
+        color: gray;
+    }
+</style>
+{% endblock%}
+
+
+{% block body %}
+
+<div class = "container mt-5">
+    <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Question</button>
+          <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Answer</button>
+          
+ 
+        </div>
+      </nav>
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+                <div class = 'card mt-4 py-3 shadow'>
+                    <h4 class = "card-header"> You have asked {{ questions.count}} question</h4>
+                    <div class = "card-body">
+                        {% for question in questions %}
+                          <h5 class = "card-text"><a class = "link-style" href="{% url 'question-details' question.slug %}">{{question.title}}</a></h5> 
+                          <a  class = "btn btn-outline-danger btn-sm mt-3"href="{% url 'delete-question' question.slug%}">Delete</a>
+                          <a  class = "btn btn-outline-success btn-sm mt-3"href="{% url 'update-question' question.slug%}">Update</a>
+                         
+                        {% endfor %}
+ 
+
+                    </div>
+                </div>
+
+        </div>
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+            <div class = 'card mt-4 py-3 shadow'>
+                <h4 class = "card-header"> You have asswered {{answers.count}} question</h4>
+                <div class = "card-body">
+                    {% for answer in answers %}
+                      <p class = "card-text"> {{ answer.description}}</p>
+                      <a  class = "btn btn-outline-danger btn-sm mt-3"href="{% url 'delete-answer' answer.id%}">Delete</a>
+                      <a  class = "btn btn-outline-success btn-sm mt-3"href="{% url 'update-answer' answer.id%}">Update</a>
+                     
+                    {% endfor %}
+
+
+                </div>
+            </div>
+
+
+            </div>
+        </div>
+        
+      </div>
+</div>
+
+{% endblock %}
