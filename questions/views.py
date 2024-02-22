@@ -6,7 +6,13 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 @login_required
 def question_list(request):
-    question_list = Question.objects.all().order_by('-created_at')
+    if 'q' in request.GET:
+        q = request.GET['q']
+        question_list = Question.objects.filter(title__icontains = q).order_by('-created_at')
+        
+    else:
+        question_list = Question.objects.all().order_by('-created_at')
+        
     return render(request,"Qlist.html",{'question_list': question_list})
 @login_required
 def question_details(request,slug):
