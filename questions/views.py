@@ -83,3 +83,10 @@ def update_answer(request,id):
         form.save()
         return redirect('question-details',slug = answer.question.slug)
     return render(request, 'update_answer.html',{'form':form})
+
+
+def delete_answer(request,id):
+    answer = Answer.objects.get(id = id)
+    answer.delete()
+    return redirect('question-details',slug = answer.question.slug)
+    

@@ -43,8 +43,8 @@
          </div>
 
          {% if request.user == answers.author%}
-         <a  class = "btn btn-outline-danger btn-sm mt-3"href="">Delete</a>
-         <a  class = "btn btn-outline-success btn-sm mt-3"href="">Update</a>
+         <a  class = "btn btn-outline-danger btn-sm mt-3"href="{% url 'delete-answer' answers.id%}">Delete</a>
+         <a  class = "btn btn-outline-success btn-sm mt-3"href="{% url 'update-answer' answers.id%}">Update</a>
          {% endif %}
 
       </div>
