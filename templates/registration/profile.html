@@ -1,0 +1,39 @@
+{% extends "base.html"%}
+{% load crispy_forms_tags %}
+
+
+{% block title %} Change account {% endblock %}
+
+{% block style %}
+<style>
+    .profile-style {
+        width:500px;
+        height:auto;
+
+    }
+</style>
+{% endblock %}
+
+
+{% block body %}
+
+<div class = "container profile-style mt-5">
+    {% if messages %}
+    {% for msg in messages %}
+      <div class = "alert alert-{{msg.level_tag}}" role = "alert">
+         {{msg.message}}
+      </div>
+    
+    {% endfor %}
+    {% endif %}
+    <h2>Change profile</h2>
+    <form action="" method = "post" novalidate>
+        {% csrf_token%}
+        {{form | crispy}}
+
+        <input type="submit" value = "Change Account" class = "btn btn-success">
+
+    </form>
+</div>
+
+{% endblock %}

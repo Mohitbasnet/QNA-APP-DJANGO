@@ -1,7 +1,7 @@
 
 from django.contrib import admin
 from django.urls import path
-from . views import question_list,question_details,register,create_question,update_question,delete_question,update_answer,delete_answer
+from . views import question_list,question_details,register,create_question,update_question,delete_question,update_answer,delete_answer,change_profile
 
 urlpatterns = [
     path("", question_list, name = "question-list"),
@@ -13,6 +13,7 @@ urlpatterns = [
     path('add/',create_question,name = "add-question"),
     path("answer/update/<int:id>/",update_answer, name = "update-answer"),
     path("answer/delete/<int:id>/",delete_answer, name = "delete-answer"),
+    path('profile/',change_profile,name = "change-profile"),
 
 
 
