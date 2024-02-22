@@ -2,11 +2,11 @@
 {% load crispy_forms_tags %}
 
 
-{% block title %} Login {% endblock %}
+{% block title %} Update Question{% endblock %}
 
 {% block style %}
 <style>
-    .login-style {
+    .update-style {
         width:500px;
         height:auto;
 
@@ -18,12 +18,12 @@
 {% block body %}
 
 <div class = "container login-style">
-    <h1>Login User</h1>
-    <form action="" method = "post" >
+    <h3>Update Question </h3>
+    <form action="" method = "post" novalidate>
         {% csrf_token%}
         {{form | crispy}}
-        <input type="hidden" name = "text" value = "{{next}}"/>
-        <input type="submit" value = "Login" class = "btn btn-success">
+
+        <input type="submit" value = "Update Question" class = "btn btn-success">
 
     </form>
 </div>

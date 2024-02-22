@@ -25,7 +25,16 @@ class QuestionRegistrationForm(ModelForm):
         fields = ('title','body')
 
 
-class AnswerForm(ModelForm):
+class AnswerForm(forms.ModelForm):
+    class Meta:
+        model = Answer
+        fields = ('description',)
+
+class QuestionUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = ('title','body')
+class AnswerUpdateForm(forms.ModelForm):
     class Meta:
         model = Answer
         fields = ('description',)
