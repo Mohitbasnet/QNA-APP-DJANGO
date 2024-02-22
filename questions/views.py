@@ -2,11 +2,13 @@ from django.shortcuts import render,get_object_or_404,redirect
 from . models import Question,Answer
 from . forms import UserRegistrationForm,QuestionRegistrationForm,AnswerForm,AnswerUpdateForm,QuestionUpdateForm,ProfileForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 # Create your views here.
+@login_required
 def question_list(request):
     question_list = Question.objects.all().order_by('-created_at')
     return render(request,"Qlist.html",{'question_list': question_list})
-
+@login_required
 def question_details(request,slug):
     question = Question.objects.get(slug = slug)
     answer_list = Answer.objects.filter(question = question)
@@ -45,7 +47,7 @@ def register(request):
 
         
     return render(request,'register.html',{'user_form':user_form})
-
+@login_required
 def create_question(request):
     if request.method == "POST":
         question_form = QuestionRegistrationForm(request.POST)
@@ -60,7 +62,7 @@ def create_question(request):
 
     return render(request, "add_question.html",{"question_form":question_form})
 
- 
+@login_required
 def update_question(request,slug):
     question = Question.objects.get(slug = slug)
 
@@ -71,11 +73,13 @@ def update_question(request,slug):
         return redirect('question-list')
 
     return render(request, 'update.html',{'form': form})
-
+@login_required
 def delete_question(request,slug):
     question= Question.objects.get(slug = slug)
     question.delete()
+ 
     return redirect('question-list')
+@login_required
 def update_answer(request,id):
     answer = Answer.objects.get(id = id)
 
@@ -85,12 +89,12 @@ def update_answer(request,id):
         return redirect('question-details',slug = answer.question.slug)
     return render(request, 'update_answer.html',{'form':form})
 
-
+@login_required
 def delete_answer(request,id):
     answer = Answer.objects.get(id = id)
     answer.delete()
     return redirect('question-details',slug = answer.question.slug)
-    
+@login_required   
 def change_profile(request):
     if request.method == "POST":
         form = ProfileForm(request.POST, instance = request.user)
@@ -103,3 +107,10 @@ def change_profile(request):
     form = ProfileForm(instance = request.user)
 
     return render(request,"registration/profile.html",{'form':form})
+
+
+@login_required
+def list_info(request):
+    questions = Question.objects.filter(author = request.user).order_by('-created_at')
+    answers = Answer.objects.filter(author = request.user).order_by("-created_at")
+    return render(request,'list_info.html',{'questions':questions,'answers':answers})
