@@ -23,10 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-4#q9w=li*2v$b=1t_bagthehy0r@ny@x!8gu+_ave-#r^93r_e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-ALLOWED_HOSTS = ['localhost','basnetmohit.pythonanywhere.com']
-
-
+DEBUG = True
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',  # You can also add 'localhost' if you use it.
+    # Add other hosts/domains as needed.
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -36,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'users',
-    'questions',
+      'users.apps.UsersConfig',
+    'questions.apps.QuestionsConfig',
     'crispy_forms',
     'crispy_bootstrap5',
      
@@ -59,7 +61,8 @@ ROOT_URLCONF = 'QNA.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join('BASE_DIR','templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
